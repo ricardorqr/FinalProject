@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Registration</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/login}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
+	</form>
+	
+	<br/>
+	
+	<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+		    	<h3 class="panel-title">Registration Form</h3>
+		  	</div>
+		  	
+			<div class="panel-body">
+				<form autocomplete="off" action="#" th:action="@{/registration}"
+					th:object="${user}" method="post" role="form">
+					<div class="form-group">
+						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+							class="validation-message"></label>
+						<input type="text" th:field="*{name}" placeholder="Name"
+							class="form-control" /> 
+					</div>
+
+					<div class="form-group">
+						<label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+							class="validation-message"></label>
+						<input type="text" th:field="*{lastName}" placeholder="Last Name" 
+							class="form-control" /> 
+					</div>
+					
+					<div class="form-group">
+						<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+							class="validation-message"></label>
+						<input type="text" th:field="*{email}" placeholder="Email"
+							class="form-control" /> 
+					</div>
+					<div class="form-group">
+						<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+							class="validation-message"></label>
+						<input type="password" th:field="*{password}" placeholder="Password" 
+							class="form-control" /> 
+					</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">Register User</button>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
