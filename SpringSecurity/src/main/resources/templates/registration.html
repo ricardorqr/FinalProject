@@ -1,7 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
 <head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
 	<title>Registration</title>
+	
 	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
@@ -15,36 +22,41 @@
 	
 	<br/>
 	
+	<div class="alert alert-success" th:text="${mensagem}" th:if="${not #strings.isEmpty(mensagem)}">
+		<span th:utext="${successMessage}"></span>
+	</div>
+	
 	<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
 		<div class="panel panel-info">
 			<div class="panel-heading">
 		    	<h3 class="panel-title">Registration Form</h3>
 		  	</div>
 		  	
+		  	<span th:utext="${successMessage}"></span>
+		  	
 			<div class="panel-body">
-				<form autocomplete="off" action="#" th:action="@{/registration}"
-					th:object="${user}" method="post" role="form">
-					<div class="form-group">
+				<form th:action="@{/registration}" th:object="${user}" method="post">
+					<div class="form-group" th:classappend="${#fields.hasErrors('name')} ? has-error">
 						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
 							class="validation-message"></label>
 						<input type="text" th:field="*{name}" placeholder="Name"
 							class="form-control" /> 
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" th:classappend="${#fields.hasErrors('lastName')} ? has-error">
 						<label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
 							class="validation-message"></label>
 						<input type="text" th:field="*{lastName}" placeholder="Last Name" 
 							class="form-control" /> 
 					</div>
 					
-					<div class="form-group">
+					<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? has-error">
 						<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
 							class="validation-message"></label>
 						<input type="text" th:field="*{email}" placeholder="Email"
 							class="form-control" /> 
 					</div>
-					<div class="form-group">
+					<div class="form-group" th:classappend="${#fields.hasErrors('password')} ? has-error">
 						<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
 							class="validation-message"></label>
 						<input type="password" th:field="*{password}" placeholder="Password" 
@@ -54,8 +66,6 @@
 					<div class="form-group">
 						<button type="submit" class="btn btn-primary btn-block">Register User</button>
 					</div>
-					
-					<span th:utext="${successMessage}"></span>
 				</form>
 			</div>
 		</div>

@@ -30,10 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private String rolesQuery;
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth.
-			jdbcAuthentication()
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.jdbcAuthentication()
 				.usersByUsernameQuery(usersQuery)
 				.authoritiesByUsernameQuery(rolesQuery)
 				.dataSource(dataSource)
@@ -42,16 +40,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.
-			authorizeRequests()
+		http.authorizeRequests()
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/registration").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-				.authenticated().and().csrf().disable().formLogin()
-				.loginPage("/login").failureUrl("/login?error=true")
-				.defaultSuccessUrl("/admin/home")
+				.antMatchers("/admin/**").hasAuthority("ADMIN")
+				.anyRequest().authenticated()
+				.and().rememberMe()
+				.and().csrf().disable()
+				.formLogin().loginPage("/login").permitAll()
+				.failureUrl("/login?error=true")
+				.defaultSuccessUrl("/home")
 				.usernameParameter("email")
 				.passwordParameter("password")
 				.and().logout()
@@ -62,8 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	    web
-	       .ignoring()
+	    web.ignoring()
 	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
 	}
 
