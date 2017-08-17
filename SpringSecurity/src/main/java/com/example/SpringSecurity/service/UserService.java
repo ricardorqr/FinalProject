@@ -5,6 +5,8 @@ import java.util.List;
 import com.example.SpringSecurity.model.User;
 
 public interface UserService {
+	
+	public User findUserById(Integer id);
 
 	public User findUserByEmail(String email);
 
